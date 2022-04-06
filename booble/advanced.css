@@ -1,0 +1,59 @@
+
+#advanced-form{
+    margin-top: 200px ;
+    display: grid;
+    grid-template-columns: 100px 250px auto 100px;
+    grid-template-rows: auto 50px 50px 50px 50px 75x auto;
+}
+
+#advanced-form > input[type=text]{
+    border-radius: 5px;
+}
+
+#all-words-label {
+    grid-row:2;    
+    grid-column: 2;
+}
+
+#all-words  {
+    grid-row:2;    
+    grid-column: 3;
+}
+
+#exact-words-label {
+    grid-row:3;    
+    grid-column: 2;
+}
+
+#exact-words  {
+    grid-row:3;    
+    grid-column: 3;
+}
+
+#any-words-label {
+    grid-row:4;    
+    grid-column: 2;
+}
+
+#any-words  {
+    grid-row:4;    
+    grid-column: 3;
+}
+
+#none-words-label {
+    grid-row:5;    
+    grid-column: 2;
+}
+
+#none-words  {
+    grid-row:5;    
+    grid-column: 3;
+}
+
+#btn-submit{
+    grid-row:6;    
+    grid-column-start: 2;
+    grid-column-end: 4;
+    justify-content: right;
+    width: 100px;
+}
