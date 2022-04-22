@@ -18,10 +18,16 @@ body {
 .active-listing{
     width:50em;
     display: flex;
+    border: 1px dotted black;
+    padding: 5px;
 }
 
-.active-listing div{
+.active-listing a{
+    color: black;    
+}
 
+.active-listing a:hover{
+    text-decoration: none;
 }
 
 .active-listing img{    

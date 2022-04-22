@@ -5,16 +5,20 @@
     <ul>
         {% for listing in listings %}
             <li class="active-listing">
-                <div>
-                    <b>Name: </b>{{ listing.name }}
-                    <br>
-                    <b>Description: </b>{{ listing.description }}
-                    <br>
-                    <b>Starting Bid: </b>{{ listing.starting_bid }}
-                    <br>
-                    <b>Caller: </b>{{ listing.caller }}
-                </div>                
-                <img src="{{ listing.image }}">
+                <a href="{% url 'listing' listing_id=listing.id %}">
+                    <div>
+                        <b>Name: </b>{{ listing.name }}
+                        <br>
+                        <b>Description: </b>{{ listing.description }}
+                        <br>
+                        <b>Starting Bid: </b>{{ listing.starting_bid }}
+                        <br>
+                        <b>Caller: </b>{{ listing.caller }}
+                    </div>                
+                </a>
+                <a href="{% url 'listing' listing_id=listing.id %}">
+                    <img src="{{ listing.image }}">
+                </a>
             </li>
         {% endfor %}
     </ul>

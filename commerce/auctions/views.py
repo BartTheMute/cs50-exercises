@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.contrib.auth import authenticate, login, logout, get_user
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
@@ -6,6 +7,7 @@ from django.urls import reverse
 
 from .models import User
 from .models import AuctionListing
+from .models import Bids
 import logging
 
 def index(request):
@@ -86,3 +88,41 @@ def new_listing(request):
         
     else:        
         return render(request, "auctions/newlisting.html")
+
+def listing(request, listing_id):
+    listing = AuctionListing.objects.get(pk=listing_id)
+    highest_bid = Bids(price=0)
+    message = ""
+
+    if(Bids.objects.count() > 0):
+        highest_bid = Bids.objects.all()[0]
+
+    if request.method == "POST":
+        bid = Decimal(request.POST["bid_amount"])
+        auction = listing
+
+        if Bids.objects.count() > 0:
+            if highest_bid.price < bid:
+                highest_bid.price = bid
+                highest_bid.bidder = get_user(request).username  
+                highest_bid.save()
+                message = "Updated highest bid"
+            else:
+                message = "Bid should be higher than the current"
+        else:
+            if bid > listing.starting_bid: 
+                newbid = Bids(
+                    price = bid,
+                    auction_listing = auction,
+                    bidder = get_user(request).username
+                )  
+                newbid.save()
+                message = "First bid!"
+            else:
+                message = "Bid should be higher than the starting bid"
+    
+    return render(request, "auctions/listing.html", {
+        "highest_bid": highest_bid.price,
+        "listing": listing,
+        "message": message
+    })

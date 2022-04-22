@@ -1,0 +1,26 @@
+{% extends "auctions/layout.html" %}
+{% block body %}      
+    <div class="active-listing">
+        <div>
+            <b>Name: </b>{{ listing.name }}
+            <br/>
+            <b>Description: </b>{{ listing.description }}
+            <br>
+            <b>Starting Bid: </b>{{ listing.starting_bid }}
+            <br>
+            <b>Caller: </b>{{ listing.caller }}    
+            <br>
+            <b>Highest Bid: </b>{{ highest_bid }}
+        </div>
+    </div>
+    {% if user.is_authenticated %}
+        <button>Add to watchlist</button>
+
+        <form action="{% url 'listing' listing_id=listing.id %}" method="POST">
+            {% csrf_token %}
+            <label>{{ message }}</label><br>
+            <input type="number" name="bid_amount" min="1" step="any">
+            <button type="commit">Bid</button>
+        </form>
+    {% endif %}
+{% endblock %}
