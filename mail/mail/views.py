@@ -98,7 +98,7 @@ def mailbox(request, mailbox):
 
 @csrf_exempt
 @login_required
-def email(request, email_id):
+def email(request, email_id):   
 
     # Query for requested email
     try:
