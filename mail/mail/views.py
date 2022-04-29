@@ -23,11 +23,11 @@ def index(request):
 
 @csrf_exempt
 @login_required
-def compose(request):
+def compose(request):    
 
     # Composing a new email must be via POST
     if request.method != "POST":
-        return JsonResponse({"error": "POST request required."}, status=400)
+        return JsonResponse({"error": "POST request required."}, status=200)
 
     # Check recipient emails
     data = json.loads(request.body)
