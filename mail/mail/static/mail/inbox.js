@@ -22,8 +22,6 @@ function compose_email() {
   document.querySelector('#compose-recipients').value = '';
   document.querySelector('#compose-subject').value = '';
   document.querySelector('#compose-body').value = '';
-  
-
 }
 
 function load_mailbox(mailbox) {
@@ -126,7 +124,21 @@ function load_mail(mailId){
     let bodydiv = document.createElement('div');
     bodydiv.textContent = mail.body;
     div.appendChild(bodydiv);
+
+    let readdiv = document.createElement('div');
+    readdiv.textContent = mail.read;
+    div.appendChild(readdiv);
+
+    let user = document.getElementsByTagName('h2')[0].innerHTML;    
+    if(mail.recipients.includes(user)){
+      let buttonArchive = document.createElement('button');
+      buttonArchive.innerHTML = mail.archived ? 'unarchive' : 'archive';
+      buttonArchive.addEventListener('click', () => archive_mail(mailId, mail.archived));      
+      div.appendChild(buttonArchive);
+    }
     
+    
+    document.querySelector('#detail-view').innerHTML = "";
     document.querySelector('#detail-view').appendChild(div);  
   })
   .catch(error => console.log(error));
@@ -134,7 +146,18 @@ function load_mail(mailId){
   fetch('/emails/' + mailId, {
     method: 'PUT',
     body: JSON.stringify({
-      archived: true
+      read: true
     })
   });
+}
+
+function archive_mail(mailId, isArchived){  
+  fetch("/emails/" + mailId, {
+    method: 'PUT',
+    body: JSON.stringify({
+      archived: !isArchived
+    })
+  })
+
+ load_mailbox("inbox") 
 }
